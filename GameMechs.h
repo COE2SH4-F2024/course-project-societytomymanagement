@@ -46,8 +46,7 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
-        int** getBoard();
-        void printBoard();
+        void printBoard(const objPos& playerPos);
         void clearBoard();
 };
 

@@ -18,7 +18,7 @@ void LoopDelay(void);
 void CleanUp(void);
 
 Player* player = NULL;
-GameMechs* game = new GameMechs();
+GameMechs* game;
 
 
 int main(void)
@@ -46,7 +46,6 @@ void Initialize(void)
 
     exitFlag = false;
 
-    game = new GameMechs();
     player = new Player(game);
 }
 
@@ -69,10 +68,9 @@ void DrawScreen(void)
     MacUILib_clearScreen();
     game->clearBoard();
 
-    objPos playerPos = player->getPlayerPos();
-    game->board[playerPos.pos->y][playerPos.pos->x] = playerPos.symbol;
+    objPos playerPosition = player->getPlayerPos();  
+    game->printBoard(playerPosition);
 
-    game->printBoard();
 }    
 
 void LoopDelay(void)

@@ -17,32 +17,31 @@ GameMechs::GameMechs()
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-    if(boardX <= 3){
-        boardX = 30;
-    }
-    else{
+    if (boardX <= 3) {
+        boardSizeX = 30;
+    } else {
         boardSizeX = boardX;
     }
-    if(boardY <= 3){
-        boardY = 15;
-    }
-    else{
+
+    if (boardY <= 3) {
+        boardSizeY = 15;
+    } else {
         boardSizeY = boardY;
     }
 
-    int i = 0, j = 0;
-    board = new int*[boardSizeX];
+    // Allocate memory for a 2D array
+    board = new int*[boardSizeY];  // Allocate rows (Y-axis)
+    for (int i = 0; i < boardSizeY; i++) {
+        board[i] = new int[boardSizeX];  // Allocate columns (X-axis) for each row
+    }
 
-    for (i = 0; i < boardSizeX; i++){
-        for (j = 0; j < boardSizeY ; j++){
-            if (i == 0 || i == (boardSizeX-1)){
-                board[j][i] = '#';
-            } 
-            else if (j == 0 || j== (boardSizeY-1)){
-                board[j][i] = '#';
-            } 
-            else{
-                board[j][i] = ' ';
+    // Initialize the board
+    for (int i = 0; i < boardSizeY; i++) {
+        for (int j = 0; j < boardSizeX; j++) {
+            if (i == 0 || i == (boardSizeY - 1) || j == 0 || j == (boardSizeX - 1)) {
+                board[i][j] = '#'; //border
+            } else {
+                board[i][j] = ' '; 
             }
         }
     }
@@ -51,10 +50,10 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    for(int i = 0; i < boardSizeX; i++){
-		delete[] board[i];
-	}
-	delete[] board;
+    for (int i = 0; i < boardSizeY; i++) {
+        delete[] board[i];  // Delete each row
+    }
+    delete[] board;
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -115,29 +114,30 @@ void GameMechs::setInput(char this_input)
 
 void GameMechs::clearInput()
 {
-    if(MacUILib_hasChar){
+    if(MacUILib_hasChar()){
         input = NULL;
     }
 }
 
 // More methods should be added here
-void GameMechs::printBoard()
+void GameMechs::printBoard(const objPos &playerPos)
 {
-    for(int i = 0; i < boardSizeX; i++){
-        for(int j = 0; j < boardSizeY; j++){
-            if(i == playerPos.pos->y && j == playerPos.pos->x)
-            MacUILib_printf("%c", board[j][i]);
+    for(int i = 0; i < boardSizeY; i++){
+        for(int j = 0; j < boardSizeX; j++){
+            if (i == playerPos.pos->y && j == playerPos.pos->x) {
+                MacUILib_printf("%c", playerPos.symbol);  // Print player's symbol
+            } else {
+                MacUILib_printf("%c", board[i][j]);  // Print board content
+            }
         }
         MacUILib_printf("\n");
     }
     MacUILib_printf("Score: %d", score);
 }
 void GameMechs::clearBoard(){
-    for (int i = 0; i < boardSizeX; i++){
-        for (int j = 0; j < boardSizeY ; j++){
-            if ((i > 0 || i < (boardSizeX-1)) && (j > 0 || j < (boardSizeY-1))){
-                board[j][i] = ' ';
-            }
+    for (int i = 1; i < boardSizeY - 1; i++) { // Loop over rows (Y)
+        for (int j = 1; j < boardSizeX - 1; j++) { // Loop over columns (X)
+            board[i][j] = ' ';
         }
     }
 }

@@ -10,11 +10,10 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
+    playerPos.pos = new Pos(); // Proper initialization
     playerPos.pos->x = 15;
-    playerPos.pos->y -= 8;  
+    playerPos.pos->y = 8;  
     playerPos.symbol = '*';
-    
-    playerPos.pos = new Pos;
 }
 
 
@@ -43,23 +42,23 @@ void Player::updatePlayerDir()
                 mainGameMechsRef->setExitTrue();
                 break;
             case 'w':
-                if(newDirection != DOWN && newDirection != UP){
-                    newDirection = UP;
+                if(myDir != DOWN && myDir != UP){
+                    myDir = UP;
                 }
                 break;
             case 'a':
-                if(newDirection != RIGHT && newDirection != LEFT){
-                    newDirection = LEFT;
+                if(myDir != RIGHT && myDir != LEFT){
+                    myDir = LEFT;
                 }
                 break;
             case 's':
-                if(newDirection != UP && newDirection != DOWN){
-                    newDirection = DOWN;
+                if(myDir != UP && myDir != DOWN){
+                    myDir = DOWN;
                 }
                 break;
             case 'd':
-                if(newDirection != LEFT && newDirection != RIGHT){
-                    newDirection = RIGHT;
+                if(myDir != LEFT && myDir != RIGHT){
+                    myDir = RIGHT;
                 }
                 break;
 
@@ -90,17 +89,17 @@ void Player::movePlayer()
             playerPos.pos->x+=1;
             break;
     }
-    if(playerPos.pos->x < 1){
-        playerPos.pos->x = mainGameMechsRef->getBoardSizeY() - 2;
-    }
-    else if (playerPos.pos->x > (mainGameMechsRef->getBoardSizeY()-2)){
+    if (playerPos.pos->x < 1) {
+        playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
+    } 
+    else if (playerPos.pos->x > (mainGameMechsRef->getBoardSizeX() - 2)) {
         playerPos.pos->x = 1;
     }
 
-    if(playerPos.pos->y < 1){
-        playerPos.pos->y = mainGameMechsRef->getBoardSizeX() - 2;
-    }
-    else if (playerPos.pos->y > (mainGameMechsRef->getBoardSizeX()-2)){
+    if (playerPos.pos->y < 1) {
+        playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
+    } 
+    else if (playerPos.pos->y > (mainGameMechsRef->getBoardSizeY() - 2)) {
         playerPos.pos->y = 1;
     }
 }
