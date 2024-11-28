@@ -16,6 +16,7 @@ class Player
     
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+        enum Dir newDirection = STOP;
 
         Player(GameMechs* thisGMRef);
         ~Player();
@@ -25,6 +26,8 @@ class Player
         void movePlayer();
 
         // More methods to be added here
+        Dir getdir();
+        Dir setdir();
 
     private:
         objPos playerPos; // Upgrade this in iteration 3.       

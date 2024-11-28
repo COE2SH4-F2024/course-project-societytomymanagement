@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -45,12 +47,11 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   
+
 }
 
 void RunLogic(void)
 {
-    
 }
 
 void DrawScreen(void)

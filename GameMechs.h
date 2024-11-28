@@ -22,7 +22,7 @@ class GameMechs
 
         objPos food;
 
-        int **gameData; //i added this delete if not needed.
+        int **board;
 
     public:
         GameMechs();
@@ -46,6 +46,8 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        void printBoard();
+        void clearBoard();
 };
 
 #endif

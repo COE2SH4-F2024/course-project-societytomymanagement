@@ -11,55 +11,50 @@ GameMechs::GameMechs()
     loseFlag = false;
     score = 0;
 
-    boardSizeX = 10;
-    boardSizeY = 20;
-
-    gameData = new int*[boardSizeX];
-
-    for(int i = 0; i < boardSizeX; i++)
-	{
-		gameData[i] = new int[boardSizeY];
-	}
-
-	for(int i = 0; i < boardSizeX; i++)
-		for(int j = 0; j < boardSizeY; j++)
-			gameData[i][j] = 0;
+    boardSizeX = 30;
+    boardSizeY = 15;
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-    if(boardX <= 0){
-        boardX = 10;
+    if(boardX <= 3){
+        boardX = 15;
     }
     else{
         boardSizeX = boardX;
     }
-    if(boardY <= 0){
-        boardY = 20;
+    if(boardY <= 3){
+        boardY = 30;
     }
     else{
-        boardSizeX = boardY;
+        boardSizeY = boardY;
     }
 
-    gameData = new int*[boardSizeX];
+    int i = 0, j = 0;
+    board = new int*[boardSizeX];
 
-	for(int i = 0; i < boardSizeX; i++)
-	{
-		gameData[i] = new int[boardSizeY];
-	}
-
-	for(int i = 0; i < boardSizeX; i++)
-		for(int j = 0; j < boardSizeY; j++)
-			gameData[i][j] = 0;
+    for (i = 0; i < boardSizeX; i++){
+        for (j = 0; j < boardSizeY ; j++){
+            if (i == 0 || i == (boardSizeX-1)){
+                board[j][i] = '#';
+            } 
+            else if (j == 0 || j== (boardSizeY-1)){
+                board[j][i] = '#';
+            } 
+            else{
+                board[j][i] = ' ';
+            }
+        }
+    }
 }
 
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
     for(int i = 0; i < boardSizeX; i++){
-		delete[] gameData[i];
+		delete[] board[i];
 	}
-	delete[] gameData;
+	delete[] board;
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -126,3 +121,22 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
+void GameMechs::printBoard()
+{
+    for(int i = 0; i < boardSizeX; i++){
+        for(int j = 0; j < boardSizeY; j++){
+            MacUILib_printf("%c", board[j][i]);
+        }
+        MacUILib_printf("\n");
+    }
+    MacUILib_printf("Score: %d", score);
+}
+void GameMechs::clearBoard(){
+    for (int i = 0; i < boardSizeX; i++){
+        for (int j = 0; j < boardSizeY ; j++){
+            if ((i > 0 || i < (boardSizeX-1)) && (j > 0 || j < (boardSizeY-1))){
+                board[j][i] = ' ';
+            }
+        }
+    }
+}
