@@ -63,3 +63,7 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos) const
     else
         return 0;
 }
+
+objPos::~objPos() {
+	delete pos;
+}

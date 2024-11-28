@@ -22,10 +22,13 @@ class GameMechs
 
         objPos food;
 
+        int **gameData; //i added this delete if not needed.
+
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
         ~GameMechs(); // is this one needed at all? Why or why not?
+        GameMechs operator=(const GameMechs &gm);
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
