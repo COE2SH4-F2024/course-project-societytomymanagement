@@ -69,7 +69,7 @@ bool GameMechs::getExitFlagStatus() const
 
 bool GameMechs::getLoseFlagStatus() const
 {
-
+    return loseFlag;
 }
     
 
@@ -85,9 +85,7 @@ int GameMechs::getScore() const
 
 void GameMechs::incrementScore()
 {
-    //if( == food){
-
-    //}
+    score++;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -110,7 +108,7 @@ void GameMechs::setExitTrue()
 
 void GameMechs::setLoseFlag()
 {
-    
+    loseFlag = true; 
 }
 
 void GameMechs::setInput(char this_input)
