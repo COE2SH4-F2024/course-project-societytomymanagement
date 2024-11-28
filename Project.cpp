@@ -17,6 +17,8 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
+Player* player = NULL;
+GameMechs* game = new GameMechs();
 
 
 int main(void)
@@ -43,21 +45,35 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     exitFlag = false;
+
+    game = new GameMechs();
+    player = new Player(game);
 }
 
 void GetInput(void)
 {
-
+    if (MacUILib_hasChar()) {
+        char input = MacUILib_getChar();
+        game->setInput(input);  // Pass input to GameMechs
+    }
 }
 
 void RunLogic(void)
 {
+    player->updatePlayerDir();
+    player->movePlayer();
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
-}
+    MacUILib_clearScreen();
+    game->clearBoard();
+
+    objPos playerPos = player->getPlayerPos();
+    game->board[playerPos.pos->y][playerPos.pos->x] = playerPos.symbol;
+
+    game->printBoard();
+}    
 
 void LoopDelay(void)
 {
@@ -67,7 +83,9 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    delete player;
+    delete game;
 
+    MacUILib_clearScreen(); 
     MacUILib_uninit();
 }

@@ -2,7 +2,7 @@
 #include "MacUILib.h"
 #include "Player.h"
 #include "objPos.h"
-#include "objPosArrayList.h"
+#include "GameMechs.h"
 
 GameMechs::GameMechs()
 {
@@ -18,13 +18,13 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     if(boardX <= 3){
-        boardX = 15;
+        boardX = 30;
     }
     else{
         boardSizeX = boardX;
     }
     if(boardY <= 3){
-        boardY = 30;
+        boardY = 15;
     }
     else{
         boardSizeY = boardY;
@@ -125,6 +125,7 @@ void GameMechs::printBoard()
 {
     for(int i = 0; i < boardSizeX; i++){
         for(int j = 0; j < boardSizeY; j++){
+            if(i == playerPos.pos->y && j == playerPos.pos->x)
             MacUILib_printf("%c", board[j][i]);
         }
         MacUILib_printf("\n");

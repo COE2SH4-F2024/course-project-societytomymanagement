@@ -10,10 +10,11 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.pos = new Pos{1, 1};  
-    playerPos.pos->x = 8;
-    playerPos.pos->y = 15;
+    playerPos.pos->x = 15;
+    playerPos.pos->y -= 8;  
     playerPos.symbol = '*';
+    
+    playerPos.pos = new Pos;
 }
 
 
@@ -72,6 +73,23 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
+    switch(newDirection)
+    {
+        case STOP:
+            break;
+        case UP:
+            playerPos.pos->y-=1;
+            break;
+        case LEFT:
+            playerPos.pos->x-=1;
+            break;
+        case DOWN:
+            playerPos.pos->y+=1;
+            break;
+        case RIGHT:
+            playerPos.pos->x+=1;
+            break;
+    }
     if(playerPos.pos->x < 1){
         playerPos.pos->x = mainGameMechsRef->getBoardSizeY() - 2;
     }
@@ -84,19 +102,6 @@ void Player::movePlayer()
     }
     else if (playerPos.pos->y > (mainGameMechsRef->getBoardSizeX()-2)){
         playerPos.pos->y = 1;
-    }
-    MacUILib_clearScreen();
-
-    int i = 0, j = 0;
-
-    for (i = 0; i < mainGameMechsRef->getBoardSizeX(); i++){
-        for (j = 0; j < mainGameMechsRef->getBoardSizeY() ; j++){
-            if (i == playerPos.pos->y && j == playerPos.pos->x){
-                // Player's position
-                MacUILib_printf("*");
-            }
-        }
-        MacUILib_printf("\n");
     }
 }
 
