@@ -17,8 +17,15 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-Player* player = nullptr;
-GameMechs* game = nullptr;
+GameMechs myGame(15, 30);
+int sizeX = myGame.getBoardSizeX();
+int sizeY = myGame.getBoardSizeY();
+
+Player myPlayer(&myGame);
+
+char gameBoard[15][30];
+
+bool loseFlag = false;
 
 
 int main(void)
@@ -44,9 +51,6 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    game = new GameMechs(); // Initialize global game pointer
-    player = new Player(game);
-
     exitFlag = false;
 }
 
@@ -54,25 +58,53 @@ void GetInput(void)
 {
     if (MacUILib_hasChar()) {
         char input = MacUILib_getChar();
-        game->setInput(input);  // Pass input to GameMechs
+        myGame.setInput(input);  // Pass input to GameMechs
     }
-    game->clearInput();
+    myGame.clearInput();
 }
 
 void RunLogic(void)
 {
-    player->updatePlayerDir();
-    player->movePlayer();
+    loseFlag = myGame.getLoseFlagStatus();
+
+    myPlayer.updatePlayerDir();
+    myPlayer.movePlayer(); 
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    game->clearBoard();
-  
-    game->printBoard(player->getPlayerPos());
 
+    for (int i = 0; i < sizeX; i++){
+        for (int j = 0; j < sizeY ; j++){
+            if (i == 0 || i == (sizeX - 1)){ //header and footer border
+                gameBoard[i][j] = '#';
+            } 
+            else if (j == 0 || j== (sizeY - 1)){ //side borders
+                gameBoard[i][j] = '#';
+            } 
+            else{
+                gameBoard[i][j] = ' ';
+            }
+        }
+    }
+
+    for (int i = 0; i < sizeX; i++){
+        for (int j = 0; j < sizeY; j++){
+            MacUILib_printf("%c", gameBoard[i][j]);
+        }
+        MacUILib_printf("\n");
+    }
+    printf("Score: %d\n", myGame.getScore());
+
+    if(loseFlag == 1)
+    {
+        exitFlag = myGame.getExitFlagStatus();
+        MacUILib_clearScreen();
+        MacUILib_printf("Your Score was: %d\n", myGame.getScore());
+    }
 }    
+
 
 void LoopDelay(void)
 {
@@ -82,9 +114,6 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    delete player;  // Free the player object
-    delete game;    // Free the game object
-
     MacUILib_clearScreen(); 
     MacUILib_uninit();
 }

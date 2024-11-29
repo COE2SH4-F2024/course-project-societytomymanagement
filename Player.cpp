@@ -32,14 +32,13 @@ objPos Player::getPlayerPos() const
 void Player::updatePlayerDir()
 {
         // PPA3 input processing logic
-    int lastInput;
-
     if(mainGameMechsRef->getInput() != 0)  // if not null character
     {
         switch(mainGameMechsRef->getInput())
         {                      
             case ' ':  // exit
                 mainGameMechsRef->setExitTrue();
+                myDir = STOP;
                 break;
             case 'w':
                 if(myDir != DOWN && myDir != UP){
@@ -90,14 +89,14 @@ void Player::movePlayer()
             break;
     }
     if (playerPos.pos->x < 1) {
-        playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
+        playerPos.pos->x = (mainGameMechsRef->getBoardSizeX() - 2);
     } 
     else if (playerPos.pos->x > (mainGameMechsRef->getBoardSizeX() - 2)) {
         playerPos.pos->x = 1;
     }
 
     if (playerPos.pos->y < 1) {
-        playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
+        playerPos.pos->y = (mainGameMechsRef->getBoardSizeY() - 2);
     } 
     else if (playerPos.pos->y > (mainGameMechsRef->getBoardSizeY() - 2)) {
         playerPos.pos->y = 1;
