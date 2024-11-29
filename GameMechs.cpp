@@ -129,9 +129,9 @@ void GameMechs::printBoard(const objPos &playerPos)
     MacUILib_printf("Score: %d\n", score);
 }
 void GameMechs::clearBoard(){
-    for(int i = 1; i < (boardSizeX - 1); i++){
-        for(int j = 1; j < (boardSizeY - 1); j++){
-            board[j][i] = ' ';  // Fill with empty spaces
+    for(int i = 1; i < (boardSizeX - 1); i++){  // Should iterate over columns
+        for(int j = 1; j < (boardSizeY - 1); j++){  // Corrected loop bounds
+            board[j][i] = '\0';
         }
     }
 }

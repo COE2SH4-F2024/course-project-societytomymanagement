@@ -52,13 +52,10 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    game->getExitFlagStatus();
-
     if (MacUILib_hasChar()) {
         char input = MacUILib_getChar();
         game->setInput(input);  // Pass input to GameMechs
     }
-    player->getPlayerPos();
     game->clearInput();
 }
 
@@ -85,7 +82,8 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    delete game;
+    delete player;  // Free the player object
+    delete game;    // Free the game object
 
     MacUILib_clearScreen(); 
     MacUILib_uninit();

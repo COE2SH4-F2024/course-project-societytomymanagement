@@ -47,6 +47,7 @@ class GameMechs
         // More methods should be added here
         void printBoard(const objPos& playerPos);
         void clearBoard();
+        
         void generateFood();
 };
 
