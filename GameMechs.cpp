@@ -6,7 +6,7 @@
 
 GameMechs::GameMechs()
 {
-    input = NULL;
+    input = '\0';
     exitFlag = false;
     loseFlag = false;
     score = 0;
@@ -30,9 +30,9 @@ GameMechs::GameMechs(int boardX, int boardY)
     }
 
     // Allocate memory for a 2D array
-    board = new int*[boardSizeY];  // Allocate rows (Y-axis)
+    board = new char*[boardSizeY];  // Allocate rows (Y-axis)
     for (int i = 0; i < boardSizeY; i++) {
-        board[i] = new int[boardSizeX];  // Allocate columns (X-axis) for each row
+        board[i] = new char[boardSizeX];  // Allocate columns (X-axis) for each row
     }
 
     // Initialize the board

@@ -22,7 +22,7 @@ class GameMechs
 
         objPos food;
 
-        int **board;
+        char **board;
 
     public:
         GameMechs();

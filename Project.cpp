@@ -53,6 +53,7 @@ void GetInput(void)
         char input = MacUILib_getChar();
         game->setInput(input);  // Pass input to GameMechs
     }
+    player->getPlayerPos();
 }
 
 void RunLogic(void)
@@ -65,9 +66,8 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
     game->clearBoard();
-
-    objPos playerPosition = player->getPlayerPos();  
-    game->printBoard(playerPosition);
+  
+    game->printBoard(player->getPlayerPos());
 
 }    
 
@@ -79,7 +79,6 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    delete player;
     delete game;
 
     MacUILib_clearScreen(); 
