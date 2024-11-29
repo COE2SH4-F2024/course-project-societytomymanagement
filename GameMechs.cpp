@@ -26,10 +26,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 // do you need a destructor?
 GameMechs::~GameMechs() {
-        for (int i = 0; i < boardSizeY; i++) {
-            delete[] board[i];  // Free each row
-        }
-        delete[] board;  // Free the array of pointers (rows)
+    
 }
 
 bool GameMechs::getExitFlagStatus() const
