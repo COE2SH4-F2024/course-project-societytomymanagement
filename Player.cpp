@@ -72,7 +72,7 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    switch(newDirection)
+    switch(myDir)
     {
         case STOP:
             break;

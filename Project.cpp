@@ -45,8 +45,6 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     exitFlag = false;
-
-    player = new Player(game);
 }
 
 void GetInput(void)
