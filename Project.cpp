@@ -17,8 +17,8 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-Player* player = NULL;
-GameMechs* game;
+Player* player = nullptr;
+GameMechs* game = nullptr;
 
 
 int main(void)
@@ -44,16 +44,22 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    game = new GameMechs(); // Initialize global game pointer
+    player = new Player(game);
+
     exitFlag = false;
 }
 
 void GetInput(void)
 {
+    game->getExitFlagStatus();
+
     if (MacUILib_hasChar()) {
         char input = MacUILib_getChar();
         game->setInput(input);  // Pass input to GameMechs
     }
     player->getPlayerPos();
+    game->clearInput();
 }
 
 void RunLogic(void)

@@ -10,7 +10,7 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.pos = new Pos(); // Proper initialization
+    playerPos.pos = new Pos();
     playerPos.pos->x = 15;
     playerPos.pos->y = 8;  
     playerPos.symbol = '*';

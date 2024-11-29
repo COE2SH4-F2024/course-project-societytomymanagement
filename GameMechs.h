@@ -28,7 +28,6 @@ class GameMechs
         GameMechs();
         GameMechs(int boardX, int boardY);
         ~GameMechs(); // is this one needed at all? Why or why not?
-        GameMechs operator=(const GameMechs &gm); //delete if not needed
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
@@ -48,6 +47,7 @@ class GameMechs
         // More methods should be added here
         void printBoard(const objPos& playerPos);
         void clearBoard();
+        void generateFood();
 };
 
 #endif
