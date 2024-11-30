@@ -11,8 +11,8 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     playerPos.pos = new Pos();
-    playerPos.pos->x = 15;
-    playerPos.pos->y = 8;  
+    playerPos.pos->x = 8;
+    playerPos.pos->y = 15;  
     playerPos.symbol = '*';
 }
 

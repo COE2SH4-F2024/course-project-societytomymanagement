@@ -85,25 +85,35 @@ void DrawScreen(void)
             else if (j == 0 || j== (sizeY - 1)){ //side borders
                 gameBoard[i][j] = '#';
             } 
-            else{
-                gameBoard[i][j] = ' ';
+            else {
+                objPos playerPos = myPlayer->getPlayerPos(); // Get the player's position
+                if (i == playerPos.pos->x && j == playerPos.pos->y) { // Check player position
+                    gameBoard[i][j] = playerPos.symbol; // Place player's symbol on the board
+                } 
+                else {
+                    gameBoard[i][j] = ' '; // Empty space
+                }
             }
         }
     }
-
     for (int i = 0; i < sizeX; i++){
         for (int j = 0; j < sizeY; j++){
             MacUILib_printf("%c", gameBoard[i][j]);
         }
         MacUILib_printf("\n");
     }
-    printf("Score: %d\n", myGame.getScore());
+    MacUILib_printf("Score: %d\n", myGame.getScore());
 
-    if(loseFlag == 1)
+    if(loseFlag == true)
     {
         exitFlag = myGame.getExitFlagStatus();
         MacUILib_clearScreen();
         MacUILib_printf("Your Score was: %d\n", myGame.getScore());
+    }
+
+    if (exitFlag == true){
+        MacUILib_clearScreen();
+        MacUILib_printf("Forced Exit.");
     }
 }    
 
