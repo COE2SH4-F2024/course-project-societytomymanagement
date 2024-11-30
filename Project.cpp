@@ -17,11 +17,11 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-GameMechs myGame(15, 30);
-int sizeX = myGame.getBoardSizeX();
-int sizeY = myGame.getBoardSizeY();
+GameMechs *myGame;
+
 
 Player *myPlayer;
+
 
 char gameBoard[15][30];
 
@@ -50,24 +50,29 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-
-    myPlayer = new Player(&myGame);
+    myGame = new GameMechs;
+    myPlayer = new Player(myGame);
+    
 
     exitFlag = false;
 }
 
 void GetInput(void)
 {
-    if (MacUILib_hasChar()) {
-        char input = MacUILib_getChar();
-        myGame.setInput(input);  // Pass input to GameMechs
-    }
-    myGame.clearInput();
+    // if (MacUILib_hasChar()) {
+    //     char input = MacUILib_getChar();
+    //     myGame.setInput(input);  // Pass input to GameMechs
+    // }
+    // myGame.clearInput();
+    myGame->getAsyncInput();
+    
+
 }
 
 void RunLogic(void)
 {
-    loseFlag = myGame.getLoseFlagStatus();
+    loseFlag = myGame->getLoseFlagStatus();
+    exitFlag = myGame->getExitFlagStatus();
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(); 
@@ -76,39 +81,47 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+    int sizeX = myGame->getBoardSizeX();
+    int sizeY = myGame->getBoardSizeY();
 
-    for (int i = 0; i < sizeX; i++){
-        for (int j = 0; j < sizeY ; j++){
-            if (i == 0 || i == (sizeX - 1)){ //header and footer border
-                gameBoard[i][j] = '#';
+    objPos playerPos = myPlayer->getPlayerPos();
+    int playerx = playerPos.pos->x;
+    int playery = playerPos.pos->y;
+    
+
+    for (int i = 0; i < sizeY; i++){
+        for (int j = 0; j < sizeX; j++){
+            if (i == 0 || i == (sizeY - 1)){ //header and footer border
+                MacUILib_printf("%c",'#');
             } 
-            else if (j == 0 || j== (sizeY - 1)){ //side borders
-                gameBoard[i][j] = '#';
+            else if (j == 0 || j == (sizeX - 1)){ //side borders
+                MacUILib_printf("%c",'#');
             } 
-            else {
-                objPos playerPos = myPlayer->getPlayerPos(); // Get the player's position
-                if (i == playerPos.pos->x && j == playerPos.pos->y) { // Check player position
-                    gameBoard[i][j] = playerPos.symbol; // Place player's symbol on the board
+            else if(i == playery && j == playerx){
+                MacUILib_printf("%c", playerPos.symbol); // Place player's symbol on the board
                 } 
-                else {
-                    gameBoard[i][j] = ' '; // Empty space
+            else {
+                MacUILib_printf("%c",' '); // Empty space
                 }
-            }
         }
+        MacUILib_printf("%c",'\n');
     }
+    
+    /*
     for (int i = 0; i < sizeX; i++){
         for (int j = 0; j < sizeY; j++){
             MacUILib_printf("%c", gameBoard[i][j]);
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("Score: %d\n", myGame.getScore());
+    */
+    MacUILib_printf("Score: %d\n", myGame->getScore());
 
     if(loseFlag == true)
     {
-        exitFlag = myGame.getExitFlagStatus();
+        exitFlag = myGame->getExitFlagStatus();
         MacUILib_clearScreen();
-        MacUILib_printf("Your Score was: %d\n", myGame.getScore());
+        MacUILib_printf("Your Score was: %d\n", myGame->getScore());
     }
 
     if (exitFlag == true){
@@ -127,6 +140,7 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     delete myPlayer;
+    delete myGame;
 
     MacUILib_clearScreen(); 
     MacUILib_uninit();

@@ -92,3 +92,12 @@ void GameMechs::generateFood() {
     food.pos->y = rand() % (boardSizeY - 2) + 1;
     food.symbol = '*';
 }
+
+void GameMechs::getAsyncInput()
+{
+    if(MacUILib_hasChar())
+    {
+        input  = MacUILib_getChar();
+        
+    }
+}

@@ -11,16 +11,15 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     playerPos.pos = new Pos();
-    playerPos.pos->x = 8;
-    playerPos.pos->y = 15;  
+    playerPos.pos->x = 15;
+    playerPos.pos->y = 8;  
     playerPos.symbol = '*';
 }
 
 
 Player::~Player()
 {
-    // delete any heap members here
-    delete playerPos.pos;
+    
 }
 
 objPos Player::getPlayerPos() const
@@ -34,11 +33,12 @@ void Player::updatePlayerDir()
         // PPA3 input processing logic
     if(mainGameMechsRef->getInput() != 0)  // if not null character
     {
+        MacUILib_printf("Input received: %c\n", mainGameMechsRef->getInput());
         switch(mainGameMechsRef->getInput())
         {                      
             case ' ':  // exit
                 mainGameMechsRef->setExitTrue();
-                myDir = STOP;
+                // myDir = STOP;
                 break;
             case 'w':
                 if(myDir != DOWN && myDir != UP){
@@ -76,16 +76,16 @@ void Player::movePlayer()
         case STOP:
             break;
         case UP:
-            playerPos.pos->y-=1;
+            playerPos.pos->y--;
             break;
         case LEFT:
-            playerPos.pos->x-=1;
+            playerPos.pos->x--;
             break;
         case DOWN:
-            playerPos.pos->y+=1;
+            playerPos.pos->y++;
             break;
         case RIGHT:
-            playerPos.pos->x+=1;
+            playerPos.pos->x++;
             break;
     }
     if (playerPos.pos->x < 1) {
