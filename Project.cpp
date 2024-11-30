@@ -21,7 +21,7 @@ GameMechs myGame(15, 30);
 int sizeX = myGame.getBoardSizeX();
 int sizeY = myGame.getBoardSizeY();
 
-Player myPlayer(&myGame);
+Player *myPlayer;
 
 char gameBoard[15][30];
 
@@ -51,6 +51,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    myPlayer = new Player(&myGame);
+
     exitFlag = false;
 }
 
@@ -67,8 +69,8 @@ void RunLogic(void)
 {
     loseFlag = myGame.getLoseFlagStatus();
 
-    myPlayer.updatePlayerDir();
-    myPlayer.movePlayer(); 
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer(); 
 }
 
 void DrawScreen(void)
@@ -114,6 +116,8 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+    delete myPlayer;
+
     MacUILib_clearScreen(); 
     MacUILib_uninit();
 }
