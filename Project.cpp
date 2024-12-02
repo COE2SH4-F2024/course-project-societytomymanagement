@@ -22,7 +22,6 @@ GameMechs *myGame;
 
 Food *myFood; 
 
-
 Player *myPlayer;
 
 
@@ -54,8 +53,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
     myGame = new GameMechs;
-    myPlayer = new Player(myGame,myFood);
     myFood = new Food(myGame); 
+    myPlayer = new Player(myGame,myFood);
 
     objPosArrayList playerPos = *myPlayer->getPlayerPos(); //get the array of player locations 
 
