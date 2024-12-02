@@ -20,7 +20,7 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-      //  objPos getPlayerPos() const; // Upgrade this in iteration 3.       
+        //objPos getPlayerPos() const; // Upgrade this in iteration 3.       
         objPosArrayList* getPlayerPos() const; 
         void updatePlayerDir();
         void movePlayer();
@@ -30,10 +30,9 @@ class Player
         Dir setdir();
 
     private:
-        //objPos playerPos; // Upgrade this in iteration 3.
+        objPos playerPos; // Upgrade this in iteration 3.
 
         objPosArrayList* playerPosList; 
-
 
 
         enum Dir myDir;

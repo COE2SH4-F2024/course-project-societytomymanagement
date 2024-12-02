@@ -57,7 +57,7 @@ void Initialize(void)
     myPlayer = new Player(myGame);
     myFood = new Food(myGame); 
 
-    myFood->generateFood(myPlayer->getPlayerPos());
+    myFood->generateFood(myPlayer->getPlayerPos()->getHeadElement());
     
 
     exitFlag = false;
@@ -91,7 +91,7 @@ void DrawScreen(void)
     int sizeX = myGame->getBoardSizeX();
     int sizeY = myGame->getBoardSizeY();
 
-    objPos playerPos = myPlayer->getPlayerPos();
+    objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
     objPos foodPos = myFood ->getFoodPos(); 
     int playerx = playerPos.pos->x;
     int playery = playerPos.pos->y;

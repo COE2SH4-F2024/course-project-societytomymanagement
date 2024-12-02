@@ -4,6 +4,8 @@
 // Paste your Tested implementation here.
 // Paste your Tested implementation here.
 
+
+//default constructor 
 objPosArrayList::objPosArrayList()
 {
     arrayCapacity = 200; //default snake size 
@@ -12,11 +14,27 @@ objPosArrayList::objPosArrayList()
     
 }
 
+//deconstructor 
 objPosArrayList::~objPosArrayList()
 {
     delete [] aList; 
 
 }
+
+//copy constructor 
+
+objPosArrayList::objPosArrayList(const objPosArrayList &o){
+
+    arrayCapacity = 200; //default snake size 
+    aList = new objPos[arrayCapacity]; //memory allocated for snake 
+    listSize = 0; 
+}
+
+//copy assignment operator 
+
+// objPosArrayList& objPosArrayList::operator=(const objPosArrayList &o){
+
+// }
 
 int objPosArrayList::getSize() const
 {
@@ -86,6 +104,8 @@ objPos objPosArrayList::getElement(int index) const
     return aList[index]; 
     
 }
+
+
 
 
 
