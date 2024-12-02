@@ -19,7 +19,8 @@ Player::Player(GameMechs* thisGMRef)
 
 Player::~Player()
 {
-    
+    //delete playerPos.pos;
+    //do we need this here?
 }
 
 objPos Player::getPlayerPos() const

@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -19,11 +20,13 @@ void CleanUp(void);
 
 GameMechs *myGame;
 
+Food *myFood; 
+
 
 Player *myPlayer;
 
 
-char gameBoard[15][30];
+//char gameBoard[15][30];
 
 bool loseFlag = false;
 
@@ -33,7 +36,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(!myGame->getExitFlagStatus())  
     {
         GetInput();
         RunLogic();
@@ -52,6 +55,9 @@ void Initialize(void)
     MacUILib_clearScreen();
     myGame = new GameMechs;
     myPlayer = new Player(myGame);
+    myFood = new Food(myGame); 
+
+    myFood->generateFood(myPlayer->getPlayerPos());
     
 
     exitFlag = false;
@@ -65,12 +71,13 @@ void GetInput(void)
     // }
     // myGame.clearInput();
     myGame->getAsyncInput();
-    
+
 
 }
 
 void RunLogic(void)
 {
+    
     loseFlag = myGame->getLoseFlagStatus();
     exitFlag = myGame->getExitFlagStatus();
 
@@ -85,6 +92,7 @@ void DrawScreen(void)
     int sizeY = myGame->getBoardSizeY();
 
     objPos playerPos = myPlayer->getPlayerPos();
+    objPos foodPos = myFood ->getFoodPos(); 
     int playerx = playerPos.pos->x;
     int playery = playerPos.pos->y;
     
@@ -100,6 +108,9 @@ void DrawScreen(void)
             else if(i == playery && j == playerx){
                 MacUILib_printf("%c", playerPos.symbol); // Place player's symbol on the board
                 } 
+            else if(j == foodPos.pos->x && i == foodPos.pos->y){
+                MacUILib_printf("%c", foodPos.symbol);
+            }
             else {
                 MacUILib_printf("%c",' '); // Empty space
                 }
@@ -141,6 +152,7 @@ void CleanUp(void)
 {
     delete myPlayer;
     delete myGame;
+    delete myFood; 
 
     MacUILib_clearScreen(); 
     MacUILib_uninit();

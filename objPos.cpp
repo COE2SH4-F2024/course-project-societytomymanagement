@@ -1,8 +1,9 @@
 #include "objPos.h"
 
+//assigning attributes for the new object 
 objPos::objPos()
 {
-    pos = new Pos;
+    pos = new Pos; //we will need to deallocate this memory
     pos->x = 0;
     pos->y = 0;
     symbol = 0; //NULL
@@ -18,14 +19,18 @@ objPos::objPos(int xPos, int yPos, char sym)
 
 // Respect the rule of six / minimum four
 // [TODO] Implement the missing special member functions to meet the minimum four rule
-objPos::objPos(const objPos &obpo) {
+
+objPos::objPos(const objPos &obpo) { //copy constructor 
     pos = new Pos; //allocate memory
     pos->x = obpo.pos->x;
     pos->y = obpo.pos->y;
     symbol = obpo.symbol;
+    //initialize a new object using attributes of another 
 }
 
 objPos objPos::operator=(const objPos &obpo){
+
+    //assign value to an existing object using attributes of another
 
 	if(this != &obpo){
         pos = new Pos;

@@ -4,7 +4,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 
-GameMechs::GameMechs()
+GameMechs::GameMechs() //default constructor
 {
     input = 0;
     exitFlag = false;
@@ -15,7 +15,7 @@ GameMechs::GameMechs()
     boardSizeY = 15;
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
+GameMechs::GameMechs(int boardX, int boardY) //constructor overload 
 {
     boardSizeX = boardX;
     boardSizeY = boardY;
@@ -26,7 +26,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 // do you need a destructor?
 GameMechs::~GameMechs() {
-    
+    //so far nothing has been allocated to the heap 
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -87,11 +87,7 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-void GameMechs::generateFood() {
-    food.pos->x = rand() % (boardSizeX - 2) + 1;
-    food.pos->y = rand() % (boardSizeY - 2) + 1;
-    food.symbol = '*';
-}
+
 
 void GameMechs::getAsyncInput()
 {
@@ -100,4 +96,5 @@ void GameMechs::getAsyncInput()
         input  = MacUILib_getChar();
         
     }
+
 }

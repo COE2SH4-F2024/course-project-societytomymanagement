@@ -6,12 +6,12 @@ typedef struct
 {
     int x;
     int y;
-} Pos;
-
+} Pos; //we use a struct for the position
+ 
 class objPos
 {
     public:
-        Pos* pos;        
+        Pos* pos;      //create a struct of the position pointer
         char symbol;
 
         objPos(); //constructor

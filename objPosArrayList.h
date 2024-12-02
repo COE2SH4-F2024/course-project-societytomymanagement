@@ -8,7 +8,7 @@
 class objPosArrayList
 {
     private:
-        objPos* aList;
+        objPos* aList; //points to the start of the list 
         int listSize;
         int arrayCapacity;
 
