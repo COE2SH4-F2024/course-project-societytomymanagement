@@ -4,9 +4,10 @@
 #include "objPos.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
+    mainFoodRef = foodRef;
     myDir = STOP;
 
     playerPosList = new objPosArrayList();
@@ -113,11 +114,18 @@ void Player::movePlayer()
         tempPos.pos->y = 1;
     }
 
+    // objPos foodPos = mainFoodRef->getFoodPos(); ****THERE IS A SEGMENTATION FAULT SOMEWHERE IN HERE****
 
+    // if(tempPos.pos->x == foodPos.pos->x && tempPos.pos->y == foodPos.pos->y){
+    //     playerPosList->insertHead(tempPos);
+    //     mainFoodRef->generateFood(tempPos);
+    // }
+    // else{
+    //     playerPosList->insertHead(tempPos);
+    //     playerPosList->removeTail();
+    // }
     playerPosList->insertHead(tempPos);
     playerPosList->removeTail();
-
-
 }
 
 // More methods to be added
