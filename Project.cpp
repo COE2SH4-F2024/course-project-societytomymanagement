@@ -92,6 +92,7 @@ void DrawScreen(void)
     int sizeY = myGame->getBoardSizeY();
 
     objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
+    objPos playerPos1 = myPlayer->getPlayerPos()->getElement(1);
     objPos foodPos = myFood ->getFoodPos(); 
     int playerx = playerPos.pos->x;
     int playery = playerPos.pos->y;
@@ -107,7 +108,10 @@ void DrawScreen(void)
             } 
             else if(i == playery && j == playerx){
                 MacUILib_printf("%c", '*'); // Place player's symbol on the board
-                } 
+                }
+            // else if(i+1 == playerPos1.pos->y && j+1 == playerPos1.pos->x){
+            //     MacUILib_printf("%c", '*'); // Place player's symbol on the board
+            //     }
             else if(j == foodPos.pos->x && i == foodPos.pos->y){
                 MacUILib_printf("%c", foodPos.symbol);
             }
