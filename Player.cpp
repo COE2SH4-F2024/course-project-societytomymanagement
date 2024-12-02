@@ -96,7 +96,7 @@ void Player::movePlayer()
             tempPos.pos->y++;
             break;
         case RIGHT:
-            tempPos.pos->x++;
+            tempPos.pos->x++; 
             break;
     }
     if (tempPos.pos->x < 1) {
