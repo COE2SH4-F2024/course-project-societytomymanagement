@@ -85,6 +85,7 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
     objPos tempPos = playerPosList->getHeadElement();
+    //objPos foodPos = mainFoodRef->getFoodPos();
 
     switch(myDir)
     {
@@ -117,16 +118,17 @@ void Player::movePlayer()
         tempPos.pos->y = 1;
     }
 
-    // objPos foodPos = mainFoodRef->getFoodPos(); ****THERE IS A SEGMENTATION FAULT SOMEWHERE IN HERE****
+   // objPos foodPos = mainFoodRef->getFoodPos(); //****THERE IS A SEGMENTATION FAULT SOMEWHERE IN HERE****
 
-    // if(tempPos.pos->x == foodPos.pos->x && tempPos.pos->y == foodPos.pos->y){
-    //     playerPosList->insertHead(tempPos);
-    //     mainFoodRef->generateFood(tempPos);
-    // }
-    // else{
-    //     playerPosList->insertHead(tempPos);
-    //     playerPosList->removeTail();
-    // }
+    // if(tempPos.pos->x == mainFoodRef->getFoodPos().pos->x && mainFoodRef->getFoodPos().pos->y == tempPos.pos->y){
+    //      playerPosList->insertHead(tempPos);
+    //      mainFoodRef->generateFood(tempPos);
+    //  }
+    //  else{
+    //      playerPosList->insertHead(tempPos);
+    //      playerPosList->removeTail();
+    //  }
+
     playerPosList->insertHead(tempPos);
     playerPosList->removeTail();
 }

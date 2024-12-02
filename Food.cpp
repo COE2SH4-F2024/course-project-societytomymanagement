@@ -16,7 +16,7 @@ Food::~Food(){
 
 void Food::generateFood(objPos blockOff){
 
-    srand(time(0));
+    srand(time(NULL));
 
     int boardSizeX = mainGameMechsRef->getBoardSizeX();
     int boardSizeY = mainGameMechsRef->getBoardSizeY();

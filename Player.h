@@ -32,6 +32,7 @@ class Player
 
     private:
         objPos playerPos; // Upgrade this in iteration 3.
+        // objPosArrayList snakeBody;
 
         objPosArrayList* playerPosList; 
 
