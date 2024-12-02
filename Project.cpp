@@ -106,7 +106,7 @@ void DrawScreen(void)
                 MacUILib_printf("%c",'#');
             } 
             else if(i == playery && j == playerx){
-                MacUILib_printf("%c", playerPos.symbol); // Place player's symbol on the board
+                MacUILib_printf("%c", '*'); // Place player's symbol on the board
                 } 
             else if(j == foodPos.pos->x && i == foodPos.pos->y){
                 MacUILib_printf("%c", foodPos.symbol);
