@@ -56,6 +56,7 @@ void objPosArrayList::insertHead(objPos thisPos)
 
     //insert at head 
     aList[0] = thisPos; 
+    listSize++; //increment the size of list upon shifting elements to the right
     
 }
 

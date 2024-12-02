@@ -129,8 +129,9 @@ void Player::movePlayer()
           playerPosList->removeTail();
       }
 
-    playerPosList->insertHead(tempPos);
-    playerPosList->removeTail();
+    //check if head overlaps with food current
+        playerPosList->insertHead(tempPos);
+        playerPosList->removeTail();
 }
 
 // More methods to be added
