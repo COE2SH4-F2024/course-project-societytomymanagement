@@ -14,6 +14,8 @@ Player::Player(GameMechs* thisGMRef)
     playerPos.pos->x = 15;
     playerPos.pos->y = 8;  
     playerPos.symbol = '*';
+
+    playerPosList = new objPosArrayList();
 }
 
 
@@ -21,6 +23,8 @@ Player::~Player()
 {
     //delete playerPos.pos;
     //do we need this here?
+
+    delete playerPosList; 
 }
 
 objPos Player::getPlayerPos() const
