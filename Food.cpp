@@ -26,8 +26,8 @@ void Food::generateFood(objPos blockOff){
     while(!openPos){
         int potentialX = rand() % (boardSizeX);
         int potentialY = rand() % (boardSizeY);
-
-        if(potentialX != blockOff.pos->x || potentialY != blockOff.pos->y){
+        
+        if(potentialX != blockOff.pos->x && potentialY != blockOff.pos->y){
             foodPos.setObjPos(potentialX, potentialY, 'o'); 
             openPos = true; 
         }
