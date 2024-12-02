@@ -19,7 +19,10 @@ Player::Player(GameMechs* thisGMRef, Food* foodRef)
 
     objPos headPos(15, 8, '*'); 
 
-    playerPosList->insertHead(headPos); 
+    playerPosList->insertHead(objPos (15, 8, '*')); 
+   // playerPosList->insertHead(objPos (15, 8, '*')); 
+   // playerPosList->insertHead(objPos (15, 8, '*')); 
+
 
 }
 
