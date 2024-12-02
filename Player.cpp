@@ -39,7 +39,7 @@ void Player::updatePlayerDir()
         {                      
             case ' ':  // exit
                 mainGameMechsRef->setExitTrue();
-                // myDir = STOP;
+                myDir = STOP;
                 break;
             case 'w':
                 if(myDir != DOWN && myDir != UP){
