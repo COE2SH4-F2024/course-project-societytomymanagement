@@ -23,12 +23,12 @@ objPosArrayList::~objPosArrayList()
 
 //copy constructor 
 
-objPosArrayList::objPosArrayList(const objPosArrayList &o){
+ objPosArrayList::objPosArrayList(const objPosArrayList &o){
 
-    arrayCapacity = 200; //default snake size 
-    aList = new objPos[arrayCapacity]; //memory allocated for snake 
-    listSize = 0; 
-}
+     arrayCapacity = 200; //default snake size 
+     aList = new objPos[arrayCapacity]; //memory allocated for snake 
+     listSize = 0; 
+ }
 
 //copy assignment operator 
 
@@ -47,11 +47,11 @@ void objPosArrayList::insertHead(objPos thisPos)
     //shift all of the elements down the list to insert at the head 
 
     int i; 
-
+    if (listSize < arrayCapacity){
     for(i = listSize; i > 0; --i){
         aList[i] = aList[i-1]; 
     }
-
+}
     listSize++; //increment the size of list upon shifting elements to the right
 
     //insert at head 
@@ -61,10 +61,10 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-
+    if(listSize < arrayCapacity){
     //insert at tail 
     aList[listSize] = thisPos; 
-    listSize++; //increment list size
+    listSize++;} //increment list size
 }
 
 void objPosArrayList::removeHead()

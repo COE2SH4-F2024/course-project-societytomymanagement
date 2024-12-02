@@ -120,14 +120,14 @@ void Player::movePlayer()
 
    // objPos foodPos = mainFoodRef->getFoodPos(); //****THERE IS A SEGMENTATION FAULT SOMEWHERE IN HERE****
 
-    // if(tempPos.pos->x == mainFoodRef->getFoodPos().pos->x && mainFoodRef->getFoodPos().pos->y == tempPos.pos->y){
-    //      playerPosList->insertHead(tempPos);
-    //      mainFoodRef->generateFood(tempPos);
-    //  }
-    //  else{
-    //      playerPosList->insertHead(tempPos);
-    //      playerPosList->removeTail();
-    //  }
+    if(tempPos.pos->x == mainFoodRef->getFoodPos().pos->x && mainFoodRef->getFoodPos().pos->y == tempPos.pos->y){
+          playerPosList->insertHead(tempPos);
+          mainFoodRef->generateFood(tempPos);
+      }
+      else{
+         playerPosList->insertHead(tempPos);
+          playerPosList->removeTail();
+      }
 
     playerPosList->insertHead(tempPos);
     playerPosList->removeTail();
