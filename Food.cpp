@@ -16,7 +16,7 @@ Food::~Food(){
 
 void Food::generateFood(objPos blockOff){
 
-    srand(time(0));
+    srand(time(NULL));
 
     int boardSizeX = mainGameMechsRef->getBoardSizeX();
     int boardSizeY = mainGameMechsRef->getBoardSizeY();
@@ -24,8 +24,8 @@ void Food::generateFood(objPos blockOff){
     bool openPos; 
 
     while(!openPos){
-        int potentialX = 1 + rand() % (boardSizeX);
-        int potentialY = 1 + rand() % (boardSizeY);
+        int potentialX = 1+  rand() % (boardSizeX);
+        int potentialY = 1+ rand() % (boardSizeY);
 
         if(potentialX != blockOff.pos->x || potentialY != blockOff.pos->y){
             foodPos.setObjPos(potentialX, potentialY, 'o'); 
