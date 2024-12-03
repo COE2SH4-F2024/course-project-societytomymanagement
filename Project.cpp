@@ -74,6 +74,10 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+
+    MacUILib_printf("\n=======================================================\n");
+    MacUILib_printf("\n\t\tYou're Invited to the \n\t\t  !!SERPENT'S FEAST!!\n\n");
+    MacUILib_printf("\n=======================================================\n");
     int xBoard = myGame->getBoardSizeX(); 
     int yBoard = myGame ->getBoardSizeY(); 
     bool drawSnakeBody, drawFood;
@@ -124,16 +128,15 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("\n==============================================\n");
+    MacUILib_printf("\n=======================================================\n");
 
-    MacUILib_printf("Welcome to the snake game !!!\n");
-    MacUILib_printf("Please use the WASD characters to move and esc to end the game .\n");
-    MacUILib_printf("Gain one point for every apple you collect!!\n");
-    MacUILib_printf("Collect special '$' food items to gain 50 points - this will increase your snake length by 10.\n");
-    MacUILib_printf("Collect special '!' food items to gain 10 points.\n");
-    MacUILib_printf("Remember, don't run into yourself!\n");
+    MacUILib_printf("*Navigate with WASD and hit ESC to end  game*\n");
+    MacUILib_printf("Gain one point for every 'o' food item  collected\n");
+    MacUILib_printf("Collect special '$' food items to gain 50 points but grow by 10 bits\n");
+    MacUILib_printf("Collect special '!' food items to gain 10 points\n");
+    MacUILib_printf("Remember, don't feast on yourself...\n");
 
-    MacUILib_printf("==============================================\n");
+    MacUILib_printf("\n=======================================================\n");
 
     MacUILib_printf("Score: %d\n", myGame->getScore());
     MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
