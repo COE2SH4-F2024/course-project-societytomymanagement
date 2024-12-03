@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 
+//Player constructor: initialize player object, initial direction, and position on board 
 Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
@@ -18,23 +19,24 @@ Player::Player(GameMechs* thisGMRef, Food* foodRef)
 }
 
 
+//player deconstructor to deallocate Player object memory 
 Player::~Player()
 {
-    // delete any heap members here
-    // No keyword new
+    // delete heap members here
+
     delete playerPosList;
 
 }
 
+//return the refernce to player position list 
 objPosArrayList* Player::getPlayerPos() const
 {
-    // return the reference to the playerPos array list
     return playerPosList;
 }
 
 void Player::updatePlayerDir()
 {
-    // Gets input from the player and proccesses the movement accordingly
+    // Updates player direction according to user input 
     char input = mainGameMechsRef->getInput();
     mainGameMechsRef->clearInput();
     switch(input) {
@@ -68,15 +70,15 @@ void Player::updatePlayerDir()
             break;
     }
 }
-
+//Moves player in the set direction, handles wraparound condition, checks food consumption and fascilitates snake growth 
 void Player::movePlayer()
 {
-    // Get the head element of the snake
+
     objPos tempPos = playerPosList->getHeadElement();
 
     switch (myDir)
     {
-        // The below cases change either the x or y position depending on direction
+        // Switch the snake's direction ensuring only 90 degree movements
         case UP:
             tempPos.pos->y--;
             break;
@@ -106,12 +108,13 @@ void Player::movePlayer()
         tempPos.pos->y = 1;
     }
 
-    
+    //Move snake head and update snake body 
     objPos temp = playerPosList->getHeadElement();
     temp.symbol = '~';
     playerPosList->removeHead();
     playerPosList->insertHead(temp);
 
+    //Assess food consumption and score changes 
     if(eatenCheck() == 1) {
             playerPosList->insertHead(tempPos);
             mainGameMechsRef->incrementScore();
@@ -136,6 +139,7 @@ void Player::movePlayer()
             playerPosList->removeTail();
         }
     
+    //check for self-collisions 
     if(deathCheck()) {
         mainGameMechsRef->setExitTrue();
         mainGameMechsRef->setLoseFlag();
@@ -143,18 +147,17 @@ void Player::movePlayer()
 }
  
 
-// More methods to be added
+// Return current player direction 
 int Player::getDir() {
     return myDir;
 }
 
-//this method allows us to define the conditions on which a snake has consumed food on the board.
+//Method for checking if player has eaten different kinds of food and updates body accordingly 
 int Player::eatenCheck() {
     for(int i=0; i<mainFoodRef->getFoodPos()->getSize(); i++) {
-        //if the head of the snake is at an equivalent position to a food object.
+
         if(playerPosList->getHeadElement().pos->x == mainFoodRef->getFoodPos()->getElement(i).pos->x && playerPosList->getHeadElement().pos->y == mainFoodRef->getFoodPos()->getElement(i).pos->y) {
-            //What type of food object are we colliding with? We change our return values depending on this, as it will allow us to adjust our
-            //score increments and other snake properties inside movePlayer().
+
             if (mainFoodRef->getFoodPos()->getElement(i).getSymbol() == 'o') {
                 return 1;
             }
@@ -169,7 +172,7 @@ int Player::eatenCheck() {
 
     return 0;
 }
-
+//Method for checking self-collisions 
 bool Player::deathCheck() {
 
     for (int i = 1; i < playerPosList->getSize(); i++)

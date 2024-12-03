@@ -4,9 +4,9 @@
 
 using namespace std;
 
+//Default constructor for game mech object 
 GameMechs::GameMechs()
 {
-    // Creates default variables for the gamemech object
     input = 0;
     exitFlag = false;
     loseFlag = false;
@@ -17,9 +17,9 @@ GameMechs::GameMechs()
 
 }
 
+//Additional Constructor for custom game board dimensions 
 GameMechs::GameMechs(int boardX, int boardY)
 {
-    // Allows custom board dimensions to be entered
     input = 0;
     exitFlag = false;
     loseFlag = false;
@@ -29,19 +29,19 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeY = boardY;
 }
 
-// Deletes the snakeFood heap member
+//Unused deconstructor 
 GameMechs::~GameMechs()
 {
 
 }
 
-// Returns the variable to track whether or not to quit the game
+// Returns exitFlag indicateing game end 
 bool GameMechs::getExitFlagStatus() const
 {
     return exitFlag;
 }
 
-// Returns the variable used to keep track if the player has lot
+// Returns flag to indicate that the user lost 
 bool GameMechs::getLoseFlagStatus() const
 {
     return loseFlag;
@@ -60,31 +60,31 @@ int GameMechs::getScore() const
     return score;
 }
 
-// Increments score by 1
+// Increments the score by 1
 void GameMechs::incrementScore()
 {
     score++;
 }
 
-// Increments score by 10
+// Increments the score by 10
 void GameMechs::incrementScore10()
 {
     score+=10;
 }
 
-// Increments score by 50
+// Increments the score by 50
 void GameMechs::incrementScore50()
 {
     score+=50;
 }
 
-// Returns the boardsizeX member field
+// Returns the x board size instance 
 int GameMechs::getBoardSizeX() const
 {
     return boardSizeX;
 }
 
-// Returns the boardsizeY member field
+// Returns the y board size instance 
 int GameMechs::getBoardSizeY() const
 {
     return boardSizeY;
@@ -103,13 +103,13 @@ void GameMechs::setLoseFlag()
     loseFlag = true;
 }
 
-// Sets the input member field to some char
+// Sets the input instance to some char
 void GameMechs::setInput(char this_input)
 {
     input = this_input;
 }
 
-// Makes the input null
+// Nullify the input 
 void GameMechs::clearInput()
 {
     input = '\0';
