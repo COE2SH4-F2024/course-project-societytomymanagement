@@ -6,6 +6,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+//#include "Food.h"
 
 using namespace std;
 
@@ -20,19 +21,18 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        objPos food;
 
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs(); // is this one needed at all? Why or why not?
+        ~GameMechs();
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
         bool getLoseFlagStatus() const;
         void setLoseFlag();
 
-        char getInput() const;
+        char getInput();
         void setInput(char this_input);
         void clearInput();
 
@@ -41,10 +41,10 @@ class GameMechs
         
         int getScore() const;
         void incrementScore();
+        void incrementScore10();
+        void incrementScore50();
         
-        // More methods should be added here
-        void getAsyncInput();
-        void generateFood();
+        void collectAsyncInput();
 };
 
 #endif

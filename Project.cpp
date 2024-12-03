@@ -1,15 +1,20 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-#include "GameMechs.h"
 #include "Player.h"
+#include "string.h"
 #include "Food.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
-bool exitFlag;
+Player *myPlayer;
+GameMechs *myGame;
+Food *myFood; 
+
+// Used to print the state string for debugging
+char dirList[5][6] = {"UP", "DOWN", "LEFT", "RIGHT", "STOP"};
 
 void Initialize(void);
 void GetInput(void);
@@ -18,22 +23,13 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-GameMechs *myGame;
-
-Food *myFood;
-
-Player *myPlayer;
-
-// char gameBoard[15][30];
-
-bool loseFlag = false;
 
 int main(void)
 {
 
     Initialize();
 
-    while (!myGame->getExitFlagStatus())
+    while(myGame->getExitFlagStatus() == false && myGame->getLoseFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -42,140 +38,110 @@ int main(void)
     }
 
     CleanUp();
+
 }
+
 
 void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    myGame = new GameMechs;
-    myFood = new Food(myGame);
+
+    myGame = new GameMechs(30, 15);
+    myFood = new Food(myGame); 
     myPlayer = new Player(myGame, myFood);
 
-    // objPosArrayList playerPos = *myPlayer->getPlayerPos(); //get the array of player locations
-
-    myFood->generateFood(myPlayer->getPlayerPos()->getHeadElement());
-
-    
 }
 
 void GetInput(void)
 {
-    // if (MacUILib_hasChar()) {
-    //     char input = MacUILib_getChar();
-    //     myGame.setInput(input);  // Pass input to GameMechs
-    // }
-    // myGame.clearInput();
-    myGame->getAsyncInput();
+    myGame->collectAsyncInput();
+    char userInput = myGame->getInput(); 
+
+    if (userInput != 0) { 
+        myPlayer->updatePlayerDir(); 
+    }
 }
 
 void RunLogic(void)
 {
-    int i, playerX, playerY;
-    // char input, playerSym;
-
-    // input = myGame->getInput();
-
-    // objPosArrayList playerPos = *myPlayer->getPlayerPos();
-
-    // for (i = 0; i < playerPos.getSize(); i++)
-    // {
-    //     playerX = playerPos.getElement(i).pos->x;
-    //     playerY = playerPos.getElement(i).pos->x;
-    // }
-
-    // loseFlag = myGame->getLoseFlagStatus();
-    // exitFlag = myGame->getExitFlagStatus();
-
-    myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();
+    if(myPlayer->getDir() != myPlayer->STOP) {
+        myPlayer->movePlayer();
+    }
+    myGame->clearInput();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
-    int sizeX = myGame->getBoardSizeX();
-    int sizeY = myGame->getBoardSizeY();
-    const objPosArrayList *snakeBody = myPlayer->getPlayerPos();
+    int xBoard = myGame->getBoardSizeX(); 
+    int yBoard = myGame ->getBoardSizeY(); 
+    bool drawSnakeBody, drawFood;
 
-    // objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
-    // objPos foodPos = myFood ->getFoodPos();
-    // int playerx = playerPos.pos->x;
-    // int playery = playerPos.pos->y;
+    // Loop to print the game board
+    for(int y=0; y<yBoard; y++) {
+        for(int x=0; x<xBoard; x++) {
+            drawSnakeBody = false;
+            drawFood = false;
 
-    for (int i = 0; i < sizeY; i++)
-    {
-        for (int j = 0; j < sizeX; j++)
-        {
-            if (i == 0 || i == (sizeY - 1))
-            { // header and footer border
-                MacUILib_printf("%c", '#');
-            }
-            else if (j == 0 || j == (sizeX - 1))
-            { // side borders
-                MacUILib_printf("%c", '#');
-            }
-            // check if the position matches the snake body
-            else
-            {
-                bool isSnake = false;
-                for (int m = 0; m < snakeBody->getSize(); m++)
-                {
-                    if (snakeBody->getElement(m).pos->x == j && snakeBody->getElement(m).pos->y == i)
-                    {
-                        MacUILib_printf("%c", snakeBody->getElement(m).symbol);
-                        isSnake = true;
-                        break;
-                    }
-                }
-
-                if (!isSnake)
-                {
-                    if (!isSnake)
-                    {
-                        if (i == myFood->getFoodPos().pos->y && j == myFood->getFoodPos().pos->y)
-                        {
-                            MacUILib_printf("%c", myFood->getFoodPos().symbol);
-                        }
-                        else
-                        {
-                            MacUILib_printf(" ");
-                        }
-                    }
+            // Print out the snake body
+            for(int i=0; i<myPlayer->getPlayerPos()->getSize(); i++) {
+                objPos tempPos = myPlayer->getPlayerPos()->getElement(i);
+                if(tempPos.pos->x == x && tempPos.pos->y == y) {
+                    MacUILib_printf("%c ", tempPos.getSymbol());
+                    drawSnakeBody = true;
+                    break;
                 }
             }
-            // else if(i == playery && j == playerx){
-            //     MacUILib_printf("%c", playerPos.symbol); // Place player's symbol on the board
-            //     }
 
-            // else if(j == foodPos.pos->x && i == foodPos.pos->y){
-            //     MacUILib_printf("%c", foodPos.symbol);
-            // }
-        }
-        MacUILib_printf("%c", '\n');
-    }
+            // Move onto the following coordinates upon printing out the body
+            if(drawSnakeBody) {
+                continue;
+            }
 
-    /*
-    for (int i = 0; i < sizeX; i++){
-        for (int j = 0; j < sizeY; j++){
-            MacUILib_printf("%c", gameBoard[i][j]);
+            // Iterate over each coordinate to print out the items in the food bucket 
+            for(int i=0; i<myFood->getFoodPos()->getSize(); i++) {
+                if(x == myFood->getFoodPos()->getElement(i).pos->x && y == myFood->getFoodPos()->getElement(i).pos->y) {
+                    MacUILib_printf("%c ", myFood->getFoodPos()->getElement(i).getSymbol());
+                    drawFood = true;
+                    break;
+                }
+            }
+
+            // Move onto the following coordinates upon printing out the food item
+            if(drawFood) {
+                continue;
+            }
+
+
+            // Prints the game board 
+            if(x == 0 || x == myGame->getBoardSizeX() - 1 || y == 0 || y == myGame->getBoardSizeY()-1) {
+                MacUILib_printf("# ");
+            } else {
+                MacUILib_printf("  "); // Otherwise print an empty space
+            }
         }
         MacUILib_printf("\n");
     }
-    */
+
+    MacUILib_printf("\n==============================================\n");
+
+    MacUILib_printf("Welcome to the snake game !!!\n");
+    MacUILib_printf("Please use the WASD characters to move and esc to end the game .\n");
+    MacUILib_printf("Gain one point for every apple you collect!!\n");
+    MacUILib_printf("Collect special '$' food items to gain 50 points - this will increase your snake length by 10.\n");
+    MacUILib_printf("Collect special '!' food items to gain 10 points.\n");
+    MacUILib_printf("Remember, don't run into yourself!\n");
+
+    MacUILib_printf("==============================================\n");
+
     MacUILib_printf("Score: %d\n", myGame->getScore());
+    MacUILib_printf("Size: %d\n", myPlayer->getPlayerPos()->getSize());
 
-    if (loseFlag == true)
-    {
-        exitFlag = myGame->getExitFlagStatus();
-        MacUILib_clearScreen();
-        MacUILib_printf("Your Score was: %d\n", myGame->getScore());
-    }
-
-    if (exitFlag == true)
-    {
-        MacUILib_clearScreen();
-        MacUILib_printf("Forced Exit.");
+    if (myGame->getLoseFlagStatus() == true){
+        MacUILib_printf("\nYou Lost!"); // Lose message
+    } else if (myGame->getExitFlagStatus() == true) {
+        MacUILib_printf("\nYou ended the game."); // Quitting game early message
     }
 }
 
@@ -184,12 +150,14 @@ void LoopDelay(void)
     MacUILib_Delay(DELAY_CONST); // 0.1s delay
 }
 
+
 void CleanUp(void)
 {
+    //MacUILib_clearScreen(); Uncomment to clear the screen upon game end
+
     delete myPlayer;
     delete myGame;
-    delete myFood;
+    delete myFood; 
 
-    MacUILib_clearScreen();
     MacUILib_uninit();
 }

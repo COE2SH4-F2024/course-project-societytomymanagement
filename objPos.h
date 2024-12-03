@@ -6,27 +6,27 @@ typedef struct
 {
     int x;
     int y;
-} Pos; //we use a struct for the position
- 
+} Pos;
+
 class objPos
 {
     public:
-        Pos* pos;      //create a struct of the position pointer
+        Pos* pos;        
         char symbol;
 
-        objPos(); //constructor
-        objPos(int xPos, int yPos, char sym); 
+        objPos();
+        objPos(int xPos, int yPos, char sym);
         
         // Respect the rule of six / minimum four
         // [TODO] Implement the missing special member functions to meet the minimum four rule
-        objPos(const objPos &obpo); //copy constructor
-		objPos operator=(const objPos &obpo); //assignment operator
-        ~objPos(); //destructor
+        ~objPos();
+        objPos(const objPos &obj);
+        objPos& operator=(const objPos &obj);
         
-        void setObjPos(objPos o);   //setters     
+        void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
 
-        objPos getObjPos() const;   //getters
+        objPos getObjPos() const;
         char getSymbol() const;
         char getSymbolIfPosEqual(const objPos* refPos) const;
         

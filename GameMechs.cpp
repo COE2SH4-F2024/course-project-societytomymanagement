@@ -1,11 +1,12 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
-#include "Player.h"
-#include "objPos.h"
-#include "GameMechs.h"
+#include <iostream>
 
-GameMechs::GameMechs() //default constructor
+using namespace std;
+
+GameMechs::GameMechs()
 {
+    // Creates default variables for the gamemech object
     input = 0;
     exitFlag = false;
     loseFlag = false;
@@ -13,88 +14,110 @@ GameMechs::GameMechs() //default constructor
 
     boardSizeX = 30;
     boardSizeY = 15;
+
 }
 
-GameMechs::GameMechs(int boardX, int boardY) //constructor overload 
+GameMechs::GameMechs(int boardX, int boardY)
 {
+    // Allows custom board dimensions to be entered
+    input = 0;
+    exitFlag = false;
+    loseFlag = false;
+    score = 0;
+
     boardSizeX = boardX;
     boardSizeY = boardY;
-
-    input = 0;
-    score = 0;
 }
 
-// do you need a destructor?
-GameMechs::~GameMechs() {
-    //so far nothing has been allocated to the heap 
+// Deletes the snakeFood heap member
+GameMechs::~GameMechs()
+{
+
 }
 
+// Returns the variable to track whether or not to quit the game
 bool GameMechs::getExitFlagStatus() const
 {
     return exitFlag;
 }
 
+// Returns the variable used to keep track if the player has lot
 bool GameMechs::getLoseFlagStatus() const
 {
     return loseFlag;
 }
     
 
-char GameMechs::getInput() const
+// Returns the input member field
+char GameMechs::getInput()
 {
     return input;
 }
 
+// Returns the score member field
 int GameMechs::getScore() const
 {
     return score;
 }
 
+// Increments score by 1
 void GameMechs::incrementScore()
 {
     score++;
 }
 
+// Increments score by 10
+void GameMechs::incrementScore10()
+{
+    score+=10;
+}
+
+// Increments score by 50
+void GameMechs::incrementScore50()
+{
+    score+=50;
+}
+
+// Returns the boardsizeX member field
 int GameMechs::getBoardSizeX() const
 {
     return boardSizeX;
 }
 
+// Returns the boardsizeY member field
 int GameMechs::getBoardSizeY() const
 {
     return boardSizeY;
 }
 
 
+// Sets the exitFlag to true
 void GameMechs::setExitTrue()
 {
     exitFlag = true;
 }
 
+// Sets the loseFlag to true
 void GameMechs::setLoseFlag()
 {
-    loseFlag = true; 
+    loseFlag = true;
 }
 
+// Sets the input member field to some char
 void GameMechs::setInput(char this_input)
 {
     input = this_input;
 }
 
+// Makes the input null
 void GameMechs::clearInput()
 {
-    input = 0;
+    input = '\0';
 }
 
-// More methods should be added here
-
-
-void GameMechs::getAsyncInput()
-{
-    if(MacUILib_hasChar())
-    {
-        input  = MacUILib_getChar();
-        
+// Collects async input from the user
+void GameMechs::collectAsyncInput() {
+    if(MacUILib_hasChar() != '\0') {
+        input = MacUILib_getChar();
     }
-
 }

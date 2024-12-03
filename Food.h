@@ -1,27 +1,24 @@
-
 #ifndef FOOD_H
 #define FOOD_H
+#define MAX_FOOD 5
 
-#include "objPos.h"
 #include "GameMechs.h"
 #include "objPosArrayList.h"
 
-class Food
-{
-    private:
-        objPos foodPos; //holds recently generated foodPos
-    
-    public:
-        Food(GameMechs *thisGMRef); 
-        ~Food(); 
 
-        void generateFood(objPos blockOff); //blockoff is the position where you shouldn't generate more food, this is the position of your player
-        objPos getFoodPos() const; 
+class Food {
+private:
+    objPosArrayList* foodBucket;
+public:
 
-        GameMechs* mainGameMechsRef;
+    GameMechs* mainGameMechsRef; 
+    Food(GameMechs *thisGMRef);
+    ~Food();
 
+    void generateFood(objPosArrayList* blockOff); // Generates a new food item while keeping track of the player
+    objPosArrayList* getFoodPos() const;
 
-}; 
+};
 
 #endif
 
