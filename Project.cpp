@@ -81,7 +81,7 @@ void DrawScreen(void)
 
     //Print the game title 
     MacUILib_printf("\n=======================================================\n");
-    MacUILib_printf("\n\t\tYou're Invited to the \n\t\t  !!SERPENT'S FEAST!!\n\n");
+    MacUILib_printf("\n\t\tYou're Invited to the \n\t\t  !!SERPENT'S FEAST!!\n");
     MacUILib_printf("\n=======================================================\n");
     int xBoard = myGame->getBoardSizeX(); 
     int yBoard = myGame ->getBoardSizeY(); 
